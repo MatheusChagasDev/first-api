@@ -1,0 +1,80 @@
+GET http://localhost:3020/
+Content-Type: application/json
+
+###
+
+POST http://localhost:3020/pokemons
+Content-Type: application/json
+
+{   
+    "dex": "001",
+    "name": "bulbasaur",
+    "type": ["Poison", "Grass"],
+    "weaknesses": {
+        'Normal': 1,
+        'Fire': 2,
+        'Water': 0.5,
+        'Eletric': 0.5,
+        'Grass': 0.25,
+        'Ice': 2,
+        'Fight': 0.5,
+        'Poison': 1,
+        'Ground': 1,
+        'Flying': 2,
+        'Psychc': 2,
+        'Bug': 1,
+        'Rock': 1,
+        'Ghost': 1,
+        'Dragon': 1,
+        'Dark': 1,
+        'Steel': 1,
+        'Fairy': 0.5},
+    "active": true,
+    "evolution": ["ivysaur", "venosaur"],
+    "sprite": { "back":  }
+}
+
+###
+// buscar todos os pokemons
+GET http://localhost:3020/pokemons
+Content-Type: application/json
+
+###
+// buscar pelo id do pokemon
+GET http://localhost:3020/pokemons/64dadc58d74f36f11338c6f9
+Content-Type: application/json
+
+###
+// editar o pokemon
+PUT http://localhost:3020/pokemons/64dd3fbc7f9ff66f2ddb133e
+Content-Type: application/json
+
+{
+    "name": "Nidokingg",
+    "type": ["Poison", "Ground"],
+    "gender": "male",
+    "nature": "Modest",
+    "abilities": ["Sheer Force"],
+    "shiny": true,
+    "active": true
+}
+
+###
+//deletar o pokemon
+
+DELETE http://localhost:3020/pokemons/64dd3fbc7f9ff66f2ddb133e
+Content-Type: application/json
+
+###
+
+PATCH http://localhost:3020/pokemons/64dadcaad74f36f11338c6fb
+Content-Type: application/json
+
+{
+    "active": true
+}
+
+###
+// get com query
+GET http://localhost:3020/pokemons?name=charmander
+Content-Type: application/json
