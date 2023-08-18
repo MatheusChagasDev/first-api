@@ -10,15 +10,6 @@ const PokemonSchema = new mongoose.Schema({
     sprite: { type: Object, required: true },
     expGrowth: { type: Number, required: true },
     moves: { type: Array, required: true },
-    // gender: {
-    //     type: String,
-    //     enum: ["male", "female", "none"],
-    //     default: "male",
-    // },
-    // nature: { type: String, required: true },
-    // abilities: { type: Array, required: true },
-    // shiny: { type: Boolean, default: false },
-    
 })
 
 const Pokemon = mongoose.model("Pokemon", PokemonSchema);

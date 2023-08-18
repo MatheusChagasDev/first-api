@@ -7,31 +7,35 @@ POST http://localhost:3020/pokemons
 Content-Type: application/json
 
 {   
-    "dex": "001",
-    "name": "bulbasaur",
+    "dex": 1,
+    "name": "bulbasaurssss",
     "type": ["Poison", "Grass"],
     "weaknesses": {
-        'Normal': 1,
-        'Fire': 2,
-        'Water': 0.5,
-        'Eletric': 0.5,
-        'Grass': 0.25,
-        'Ice': 2,
-        'Fight': 0.5,
-        'Poison': 1,
-        'Ground': 1,
-        'Flying': 2,
-        'Psychc': 2,
-        'Bug': 1,
-        'Rock': 1,
-        'Ghost': 1,
-        'Dragon': 1,
-        'Dark': 1,
-        'Steel': 1,
-        'Fairy': 0.5},
+        "Normal": 1,
+        "Fire": 2,
+        "Water": 0.5,
+        "Eletric": 0.5,
+        "Grass": 0.25,
+        "Ice": 2,
+        "Fight": 0.5,
+        "Poison": 1,
+        "Ground": 1,
+        "Flying": 2,
+        "Psychc": 2,
+        "Bug": 1,
+        "Rock": 1,
+        "Ghost": 1,
+        "Dragon": 1,
+        "Dark": 1,
+        "Steel": 1,
+        "Fairy": 0.5},
     "active": true,
     "evolution": ["ivysaur", "venosaur"],
-    "sprite": { "back":  }
+    "sprite": { "back": "https://img.pokemondb.net/sprites/black-white/anim/back-normal/bulbasaur.gif",
+                "front": "https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" 
+                },
+    "expGrowth": 1059862,
+    "moves": ["Tackle", "Growl", "Vine Whip"]
 }
 
 ###
@@ -46,23 +50,45 @@ Content-Type: application/json
 
 ###
 // editar o pokemon
-PUT http://localhost:3020/pokemons/64dd3fbc7f9ff66f2ddb133e
+PUT http://localhost:3020/pokemons/64de7225247d15c4b873ad61
 Content-Type: application/json
 
-{
-    "name": "Nidokingg",
-    "type": ["Poison", "Ground"],
-    "gender": "male",
-    "nature": "Modest",
-    "abilities": ["Sheer Force"],
-    "shiny": true,
-    "active": true
+{   
+    "dex": 1,
+    "name": "bulbasaur",
+    "type": ["Poison", "Grass"],
+    "weaknesses": {
+        "Normal": 2,
+        "Fire": 2,
+        "Water": 0.5,
+        "Eletric": 0.5,
+        "Grass": 0.25,
+        "Ice": 2,
+        "Fight": 0.5,
+        "Poison": 1,
+        "Ground": 1,
+        "Flying": 2,
+        "Psychc": 2,
+        "Bug": 1,
+        "Rock": 1,
+        "Ghost": 1,
+        "Dragon": 1,
+        "Dark": 1,
+        "Steel": 1,
+        "Fairy": 0.5},
+    "active": true,
+    "evolution": ["ivysaur", "venosaur"],
+    "sprite": { "back": "https://img.pokemondb.net/sprites/black-white/anim/back-normal/bulbasaur.gif",
+                "front": "https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" 
+                },
+    "expGrowth": 1059862,
+    "moves": ["Tackle", "Growl", "Vine Whip"]
 }
 
 ###
 //deletar o pokemon
 
-DELETE http://localhost:3020/pokemons/64dd3fbc7f9ff66f2ddb133e
+DELETE http://localhost:3020/pokemons/64dea085aa4cf115886cf7f6
 Content-Type: application/json
 
 ###
@@ -76,5 +102,96 @@ Content-Type: application/json
 
 ###
 // get com query
-GET http://localhost:3020/pokemons?name=charmander
+GET http://localhost:3020/pokemons?type=2
 Content-Type: application/json
+
+
+################################
+//trainer
+################################
+
+###
+
+GET http://localhost:3020/trainer
+Content-Type: application/json
+
+###
+
+POST http://localhost:3020/trainer
+Content-Type: application/json
+
+{
+    "name": "matheus",
+    "gender": "male",
+    "region": "kanto",
+    "badge": ["boulder"],
+    "pokemons": ["bulbasaur"]
+}
+
+###
+// buscar todos os treinadores
+GET http://localhost:3020/trainer
+Content-Type: application/json
+
+###
+// buscar pelo id do treinador
+GET http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
+Content-Type: application/json
+
+###
+PUT http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
+Content-Type: application/json
+
+{
+    "name": "matheus",
+    "gender": "male",
+    "region": "kanto",
+    "badge": ["boulder"],
+    "pokemons": ["bulbasaur"]
+}
+
+###
+//deletar o pokemon
+
+DELETE http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
+Content-Type: application/json
+
+###
+PATCH http://localhost:3020/trainer/64dfdaf5a52127e89c23e8b7
+Content-Type: application/json
+
+{
+    "gender": "male"
+}
+
+###
+// get com query
+GET http://localhost:3020/trainer?gender=male
+Content-Type: application/json
+
+################################
+//myPokemons
+################################
+
+POST http://localhost:3020/my-pokemons
+Content-Type: application/json
+
+{
+    "pokemon": "bulbasaur",
+    "height": 0.7,
+    "weight": 6.9,
+    "abilities": ["Overgrow"],
+    "gender": "male",
+    "status": {
+        "HP": 100,
+        "Attack": 100,
+        "Defense": 100,
+        "Sp.Attack": 100,
+        "Sp.Defense": 100,
+        "Speed": 100,
+    },
+    "shiny": true,
+    "level":12,
+    "exp":122
+    
+}
