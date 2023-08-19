@@ -139,6 +139,7 @@ GET http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
 Content-Type: application/json
 
 ###
+// editar o treinador
 PUT http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
 Content-Type: application/json
 
@@ -151,7 +152,7 @@ Content-Type: application/json
 }
 
 ###
-//deletar o pokemon
+//deletar o treinador
 
 DELETE http://localhost:3020/trainer/64dfc3acb70c3f098c2b5638
 Content-Type: application/json
@@ -166,13 +167,13 @@ Content-Type: application/json
 
 ###
 // get com query
-GET http://localhost:3020/trainer?gender=male
+GET http://localhost:3020/trainer?gender=female
 Content-Type: application/json
 
 ################################
 //myPokemons
 ################################
-
+// criar o meu pokemon
 POST http://localhost:3020/my-pokemons
 Content-Type: application/json
 
@@ -182,16 +183,70 @@ Content-Type: application/json
     "weight": 6.9,
     "abilities": ["Overgrow"],
     "gender": "male",
-    "status": {
+    "stats": {
         "HP": 100,
         "Attack": 100,
         "Defense": 100,
-        "Sp.Attack": 100,
-        "Sp.Defense": 100,
-        "Speed": 100,
+        "Sp_Attack": 100,
+        "Sp_Defense": 100,
+        "Speed": 100
     },
     "shiny": true,
     "level":12,
     "exp":122
     
 }
+
+###
+// buscar todos os meus pokemons
+GET http://localhost:3020/my-pokemons
+Content-Type: application/json
+
+###
+// buscar pelo id do meu pokemon
+GET http://localhost:3020/my-pokemons/64e0323b5191d99d4a135e01
+Content-Type: application/json
+
+
+###
+// editar o meu pokemon
+PUT http://localhost:3020/my-pokemons/64e0323b5191d99d4a135e01
+Content-Type: application/json
+
+{
+    "pokemon": "bulbasaurr",
+    "height": 0.7,
+    "weight": 6.9,
+    "abilities": ["Overgrow"],
+    "gender": "male",
+    "stats": {
+        "HP": 100,
+        "Attack": 100,
+        "Defense": 100,
+        "Sp_Attack": 100,
+        "Sp_Defense": 100,
+        "Speed": 100
+    },
+    "shiny": true,
+    "level":12,
+    "exp":122
+    
+}
+
+###
+//deletar o meu pokemon
+DELETE http://localhost:3020/my-pokemons/64e03cfa1cd03f0ab2b39cce
+Content-Type: application/json
+
+###
+PATCH http://localhost:3020/my-pokemons/64e0323b5191d99d4a135e01
+Content-Type: application/json
+
+{
+    "gender": "male"
+}
+
+###
+// get com query
+GET http://localhost:3020/my-pokemons?gender=male
+Content-Type: application/json

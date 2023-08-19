@@ -1,4 +1,4 @@
-const MyPokemons = require("../models/myPokemons");
+const mypokemons = require("../models/myPokemons");
 const mongoose = require("mongoose");
 
 class myPokemonsController {
@@ -31,7 +31,7 @@ class myPokemonsController {
         });
       }
 
-      const newPokemon = await MyPokemons.create(req.body);
+      const newPokemon = await mypokemons.create(req.body);
       res.json(newPokemon);
       console.log(newPokemon);
     } catch (error) {
@@ -42,7 +42,7 @@ class myPokemonsController {
   }
 
   async index(req, res) {
-    const validFields = ['name', 'gender', 'region', 'badge', 'pokemons'];
+    const validFields = ['pokemon', 'height', 'weight', 'abilities', 'gender', 'stats', 'shiny', 'level', 'exp'];
     const query = req.query;
 
     const invalidFields = Object.keys(query).filter(field => !validFields.includes(field));
@@ -53,62 +53,90 @@ class myPokemonsController {
         });
     }
 
-    const trainers = await trainer.find(query);
+    const MyPokemon = await mypokemons.find(query);
 
-    if (query.name && trainers.length === 0) {
+    if (query.pokemon && MyPokemon.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador encontrado com o nome '${query.name}'`
+            error: `Nenhum pokémon encontrado com o nome '${query.pokemon}'`
         });
     }
 
-    if (query.gender && trainers.length === 0) {
+    if (query.height && MyPokemon.length === 0) {
         return res.status(404).json({
-            error: `Nenhum genero encontrado com o tipo '${query.type}'`
+            error: `Nenhuma altura encontrada '${query.height}'`
         });
     }
 
-    if (query.region && trainers.length === 0) {
+    if (query.weight && MyPokemon.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador encontrado na região '${query.type}'`
+            error: `O peso não corresponde a nenhum pokémon '${query.weight}'`
         });
     }
 
-    if (query.badge && trainers.length === 0) {
+    if (query.abilities && MyPokemon.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador encontrado com o badge '${query.type}'`
+            error: `Nenhuma habilidade encontrada '${query.abilities}'`
         });
     }
 
-    if (query.pokemons && trainers.length === 0) {
+    if (query.gender && MyPokemon.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador com o pokemon '${query.type}'`
+            error: `Nenhum pokemon com o genero '${query.gender}'`
         });
     }
-    res.json(trainers);
+    if (query.stats && MyPokemon.length === 0) {
+        return res.status(404).json({
+            error: `Nenhum pokemon com o status '${query.stats}'`
+        });
+    }
+    if (query.shiny && MyPokemon.length === 0) {
+        return res.status(404).json({
+            error: `Nenhum pokemon brilhante '${query.shiny}'`
+        });
+    }
+    if (query.level && MyPokemon.length === 0) {
+        return res.status(404).json({
+            error: `Nenhum pokemon com o level '${query.level}'`
+        });
+    }
+    if (query.exp && MyPokemon.length === 0) {
+        return res.status(404).json({
+            error: `Nenhum pokemon com o exp '${query.exp}'`
+        });
+    }
+    res.json(MyPokemon);
 }
 
   async update(req, res) {
     try {
       const { id } = req.params;
       const {
-        name,
+        pokemon,
+        height,
+        weight,
+        abilities,
         gender,
-        region,
-        badge,
-        pokemons,
+        stats,
+        shiny,
+        level,
+        exp,
       } = req.body;
 
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res
           .status(402)
-          .json({ message: "O id do treinador não é compativel." });
+          .json({ message: "O id do pokémon não é compativel." });
       }
       const requiredFields = [
-        "name",
+        "pokemon",
+        "height",
+        "weight",
+        "abilities",
         "gender",
-        "region",
-        "badge",
-        "pokemons",
+        "stats",
+        "shiny",
+        "level",
+        "exp",
       ];
       const missingFields = [];
 
@@ -125,67 +153,67 @@ class myPokemonsController {
           message: `Faltando preencher os campos: ${missingFields.join(", ")}`,
         });
       }
-      const updatedTrainer = await trainer.updateOne(
+      const updatedMyPokemon = await mypokemons.updateOne(
         { _id: id },
-        { name, gender, region, badge, pokemons }
+        { pokemon, height, weight, abilities, gender, stats, shiny, level, exp }
       );
-      if (updatedTrainer.matchedCount === 0) {
+      if (updatedMyPokemon.matchedCount === 0) {
         return res
           .status(404)
           .json({ message: "Id não esta vinculado a base de dados" });
       }
-      if (updatedTrainer.modifiedCount === 0) {
+      if (updatedMyPokemon.modifiedCount === 0) {
         return res
           .status(200)
-          .json({ message: `O treinador ${name} não teve alteração.` });
+          .json({ message: `O pokémon ${pokemon} não teve alteração.` });
       }
-      if (updatedTrainer.modifiedCount !== 0) {
+      if (updatedMyPokemon.modifiedCount !== 0) {
         return res
           .status(200)
-          .json({ message: `O treinador ${name} foi editado com sucesso!.` });
+          .json({ message: `O pokémon ${pokemon} foi editado com sucesso!.` });
       }
-      res.json(updatedTrainer);
+      res.json(updatedMyPokemon);
     } catch (error) {
       return res
         .status(500)
-        .json({ message: "Erro ao excluir o treinador.", error });
+        .json({ message: "Erro ao excluir o pokémon.", error });
     }
   }
 
   async delete(req, res) {
     const { id } = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(402).json({ message: "O id do treinador não existe." });
+      return res.status(402).json({ message: "O id do pokémon não existe." });
     }
 
     try {
-      const deleteTreiner = await trainer.deleteOne({ _id: id });
+      const deleteMyPokemon = await mypokemons.deleteOne({ _id: id });
 
-      if (deleteTreiner.deletedCount === 0) {
-        return res.status(404).json({ message: "Treinador não encontrado." });
+      if (deleteMyPokemon.deletedCount === 0) {
+        return res.status(404).json({ message: "Pokémon não encontrado." });
       }
 
-      if (deleteTreiner.deletedCount === 1) {
-        return res.status(200).json({ message: "Treinador deletado com sucesso!." });
+      if (deleteMyPokemon.deletedCount === 1) {
+        return res.status(200).json({ message: "Pokémon deletado com sucesso!." });
       }
 
-      res.json(deleteTreiner);
+      res.json(deleteMyPokemon);
     } catch (error) {
-      res.status(500).json({ message: "Erro ao excluir o treinador." });
+      res.status(500).json({ message: "Erro ao excluir o pokémon." });
     }
   }
 
   async show(req, res) {
     try {
-      const trainers = await trainer.findById(req.params.id);
+      const MyPokemon = await mypokemons.findById(req.params.id);
 
-      if (!trainers) {
-        return res.status(404).json({ message: "Treinador não encontrado." });
+      if (!MyPokemon) {
+        return res.status(404).json({ message: "Pokémon não encontrado." });
       }
 
-      res.json(trainers);
+      res.json(MyPokemon);
     } catch (error) {
-      res.status(500).json({ message: "Erro ao buscar o treinador." });
+      res.status(500).json({ message: "Erro ao buscar o pokémon." });
     }
   }
 
@@ -198,13 +226,19 @@ class myPokemonsController {
       res.status(409).json({ error: "O campo gender não foi enviado." });
     }
     const { id } = req.params;
-    const updatedStatusTrainer = await trainer.updateOne({ _id: id }, data);
-    if (updatedStatusTrainer.modifiedCount !== 0) {
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res
+          .status(402)
+          .json({ message: "O id do pokémon não é compativel." });
+      }
+    const updatedStatusMyPokemon = await mypokemons.updateOne({ _id: id }, data);
+    if (updatedStatusMyPokemon.modifiedCount !== 0) {
         return res
           .status(200)
-          .json({ message: `O treinador foi editado com sucesso!.` });
+          .json({ message: `O pokémon foi editado com sucesso!.` });
       }
-    res.json(updatedStatusTrainer);
+    res.json(updatedStatusMyPokemon);
   }
 }
 

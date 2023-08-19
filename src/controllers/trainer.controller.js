@@ -58,25 +58,25 @@ class TrainerController {
 
     if (query.gender && trainers.length === 0) {
         return res.status(404).json({
-            error: `Nenhum genero encontrado com o tipo '${query.type}'`
+            error: `Nenhum genero encontrado com o tipo '${query.gender}'`
         });
     }
 
     if (query.region && trainers.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador encontrado na região '${query.type}'`
+            error: `Nenhum treinador encontrado na região '${query.region}'`
         });
     }
 
     if (query.badge && trainers.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador encontrado com o badge '${query.type}'`
+            error: `Nenhum treinador encontrado com o badge '${query.badge}'`
         });
     }
 
     if (query.pokemons && trainers.length === 0) {
         return res.status(404).json({
-            error: `Nenhum treinador com o pokemon '${query.type}'`
+            error: `Nenhum treinador com o pokemon '${query.pokemons}'`
         });
     }
     res.json(trainers);
@@ -193,6 +193,11 @@ class TrainerController {
       res.status(409).json({ error: "O campo gender não foi enviado." });
     }
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(402)
+        .json({ message: "O id do treinador não é compativel." });
+    }
     const updatedStatusTrainer = await trainer.updateOne({ _id: id }, data);
     if (updatedStatusTrainer.modifiedCount !== 0) {
         return res

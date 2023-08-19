@@ -193,6 +193,11 @@ class PokemonsController {
       res.status(409).json({ error: "O campo active não foi enviado." });
     }
     const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(402)
+        .json({ message: "O id do pokémon não é compativel." });
+    }
     const updatedStatusPokemon = await pokemon.updateOne({ _id: id }, data);
     if (updatedStatusPokemon.modifiedCount !== 0) {
       return res
