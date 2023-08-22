@@ -9,6 +9,11 @@ const MyPokemonsSchema = new mongoose.Schema({
     type: String,
     enum: ["male", "female", "none"],
   },
+  evolution: {
+    evolvesFrom: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+    evolvesTo: { type: mongoose.Schema.Types.ObjectId, ref: 'Pokemon' },
+  },
+  description: { type: String },
   stats: { type: Object, required: true },
   shiny: { type: Boolean, default: false }, 
   level: { type: Number, default: false },

@@ -14,6 +14,13 @@ class PokemonsController {
         "sprite",
         "expGrowth",
         "moves",
+        "baseExperience",
+        "captureRate",
+        "generation",
+        "genderRatio",
+        "eggGroups",
+        "baseFriendship",
+        "habitat",
       ];
       const missingFields = [];
 
@@ -42,38 +49,46 @@ class PokemonsController {
   }
 
   async index(req, res) {
-    const validFields = ['dex', 'name', 'type']; // Exemplo de campos válidos no modelo de Pokémon
+    const validFields = ["dex", "name", "type", "generation"];
     const query = req.query;
 
-    const invalidFields = Object.keys(query).filter(field => !validFields.includes(field));
+    const invalidFields = Object.keys(query).filter(
+      (field) => !validFields.includes(field)
+    );
 
     if (invalidFields.length > 0) {
-        return res.status(400).json({
-            error: `Campos de consulta inválidos: ${invalidFields.join(', ')}`
-        });
+      return res.status(400).json({
+        error: `Campos de consulta inválidos: ${invalidFields.join(", ")}`,
+      });
     }
 
     const pokemons = await pokemon.find(query);
 
     if (query.dex && pokemons.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum Pokémon encontrado com o número da dex '${query.dex}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum Pokémon encontrado com o número da dex '${query.dex}'`,
+      });
     }
 
     if (query.name && pokemons.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum Pokémon encontrado com o nome '${query.name}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum Pokémon encontrado com o nome '${query.name}'`,
+      });
     }
 
     if (query.type && pokemons.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum Pokémon encontrado com o tipo '${query.type}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum Pokémon encontrado com o tipo '${query.type}'`,
+      });
+    }
+
+    if (query.generation && pokemons.length === 0) {
+      return res.status(404).json({
+        error: `Nenhum Pokémon da geração ${generation} foi encontrado '${query.generation}'`,
+      });
     }
     res.json(pokemons);
-}
+  }
 
   async update(req, res) {
     try {
@@ -104,6 +119,13 @@ class PokemonsController {
         "sprite",
         "expGrowth",
         "moves",
+        "baseExperience",
+        "captureRate",
+        "generation",
+        "genderRatio",
+        "eggGroups",
+        "baseFriendship",
+        "habitat",
       ];
       const missingFields = [];
 
@@ -122,7 +144,21 @@ class PokemonsController {
       }
       const updatedPokemon = await pokemon.updateOne(
         { _id: id },
-        { dex, name, type, weaknesses, evolution, sprite, expGrowth, moves }
+        {
+          dex,
+          name,
+          type,
+          weaknesses,
+          evolution,
+          sprite,
+          expGrowth,
+          moves,
+          baseExperience,
+          captureRatio,
+          eggGroups,
+          baseFriendship,
+          habitat
+        }
       );
       if (updatedPokemon.matchedCount === 0) {
         return res
@@ -161,7 +197,9 @@ class PokemonsController {
       }
 
       if (deletePokemon.deletedCount === 1) {
-        return res.status(200).json({ message: "Pokémon deletado com sucesso!." });
+        return res
+          .status(200)
+          .json({ message: "Pokémon deletado com sucesso!." });
       }
 
       res.json(deletePokemon);

@@ -10,6 +10,8 @@ class myPokemonsController {
         "weight",
         "abilities",
         "gender",
+        "evolution",
+        "description",
         "stats",
         "shiny",
         "level",
@@ -42,70 +44,94 @@ class myPokemonsController {
   }
 
   async index(req, res) {
-    const validFields = ['pokemon', 'height', 'weight', 'abilities', 'gender', 'stats', 'shiny', 'level', 'exp'];
+    const validFields = [
+      "pokemon",
+      "height",
+      "weight",
+      "abilities",
+      "gender",
+      "evolution",
+      "description",
+      "stats",
+      "shiny",
+      "level",
+      "exp",
+    ];
     const query = req.query;
 
-    const invalidFields = Object.keys(query).filter(field => !validFields.includes(field));
+    const invalidFields = Object.keys(query).filter(
+      (field) => !validFields.includes(field)
+    );
 
     if (invalidFields.length > 0) {
-        return res.status(400).json({
-            error: `Campos de consulta inválidos: ${invalidFields.join(', ')}`
-        });
+      return res.status(400).json({
+        error: `Campos de consulta inválidos: ${invalidFields.join(", ")}`,
+      });
     }
 
     const MyPokemon = await mypokemons.find(query);
 
     if (query.pokemon && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokémon encontrado com o nome '${query.pokemon}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon encontrado com o nome '${query.pokemon}'`,
+      });
     }
 
     if (query.height && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhuma altura encontrada '${query.height}'`
-        });
+      return res.status(404).json({
+        error: `Nenhuma altura encontrada '${query.height}'`,
+      });
     }
 
     if (query.weight && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `O peso não corresponde a nenhum pokémon '${query.weight}'`
-        });
+      return res.status(404).json({
+        error: `O peso não corresponde a nenhum pokémon '${query.weight}'`,
+      });
     }
 
     if (query.abilities && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhuma habilidade encontrada '${query.abilities}'`
-        });
+      return res.status(404).json({
+        error: `Nenhuma habilidade encontrada '${query.abilities}'`,
+      });
     }
 
     if (query.gender && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokemon com o genero '${query.gender}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon com o genero '${query.gender}'`,
+      });
+    }
+    if (query.evolution && MyPokemon.length === 0) {
+      return res.status(404).json({
+        error: `Nenhum pokémon com a evolução encontrado '${query.evolution}'`,
+      });
+    }
+    if (query.description && MyPokemon.length === 0) {
+      return res.status(404).json({
+        error: `Nenhum pokémon com a descrição encontrado '${query.description}'`,
+      });
     }
     if (query.stats && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokemon com o status '${query.stats}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon com o status '${query.stats}'`,
+      });
     }
     if (query.shiny && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokemon brilhante '${query.shiny}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon brilhante '${query.shiny}'`,
+      });
     }
     if (query.level && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokemon com o level '${query.level}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon com o level '${query.level}'`,
+      });
     }
     if (query.exp && MyPokemon.length === 0) {
-        return res.status(404).json({
-            error: `Nenhum pokemon com o exp '${query.exp}'`
-        });
+      return res.status(404).json({
+        error: `Nenhum pokémon com o exp '${query.exp}'`,
+      });
     }
     res.json(MyPokemon);
-}
+  }
 
   async update(req, res) {
     try {
@@ -116,6 +142,8 @@ class myPokemonsController {
         weight,
         abilities,
         gender,
+        evolution,
+        description,
         stats,
         shiny,
         level,
@@ -133,6 +161,8 @@ class myPokemonsController {
         "weight",
         "abilities",
         "gender",
+        "evolution",
+        "description",
         "stats",
         "shiny",
         "level",
@@ -155,7 +185,19 @@ class myPokemonsController {
       }
       const updatedMyPokemon = await mypokemons.updateOne(
         { _id: id },
-        { pokemon, height, weight, abilities, gender, stats, shiny, level, exp }
+        {
+          pokemon,
+          height,
+          weight,
+          abilities,
+          gender,
+          evolution,
+          description,
+          stats,
+          shiny,
+          level,
+          exp,
+        }
       );
       if (updatedMyPokemon.matchedCount === 0) {
         return res
@@ -194,7 +236,9 @@ class myPokemonsController {
       }
 
       if (deleteMyPokemon.deletedCount === 1) {
-        return res.status(200).json({ message: "Pokémon deletado com sucesso!." });
+        return res
+          .status(200)
+          .json({ message: "Pokémon deletado com sucesso!." });
       }
 
       res.json(deleteMyPokemon);
@@ -228,16 +272,19 @@ class myPokemonsController {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res
-          .status(402)
-          .json({ message: "O id do pokémon não é compativel." });
-      }
-    const updatedStatusMyPokemon = await mypokemons.updateOne({ _id: id }, data);
+      return res
+        .status(402)
+        .json({ message: "O id do pokémon não é compativel." });
+    }
+    const updatedStatusMyPokemon = await mypokemons.updateOne(
+      { _id: id },
+      data
+    );
     if (updatedStatusMyPokemon.modifiedCount !== 0) {
-        return res
-          .status(200)
-          .json({ message: `O pokémon foi editado com sucesso!.` });
-      }
+      return res
+        .status(200)
+        .json({ message: `O pokémon foi editado com sucesso!.` });
+    }
     res.json(updatedStatusMyPokemon);
   }
 }

@@ -35,7 +35,18 @@ Content-Type: application/json
                 "front": "https://img.pokemondb.net/sprites/black-white/anim/normal/bulbasaur.gif" 
                 },
     "expGrowth": 1059862,
-    "moves": ["Tackle", "Growl", "Vine Whip"]
+    "moves": ["Tackle", "Growl", "Vine Whip"],
+    "baseExperience": 64,
+    "captureRate": 45,
+    "generation": 1,
+    "genderRatio": {
+    "male": 87.5,
+    "female": 12.5
+    },
+    "eggGroups": ["Monster", "Grass"],
+    "baseFriendship": 70,
+    "habitat": "Grassland"
+    
 }
 
 ###
@@ -183,6 +194,13 @@ Content-Type: application/json
     "weight": 6.9,
     "abilities": ["Overgrow"],
     "gender": "male",
+    "evolution": {
+    "evolvesFrom": null,
+    "evolvesTo": {
+      "_id": "id_do_pokemon_evoluido"
+    }
+    },
+    "description": "A strange seed was planted on its back at birth...",
     "stats": {
         "HP": 100,
         "Attack": 100,
@@ -219,6 +237,13 @@ Content-Type: application/json
     "weight": 6.9,
     "abilities": ["Overgrow"],
     "gender": "male",
+    "evolution": {
+    "evolvesFrom": null,
+    "evolvesTo": {
+      "_id": "id_do_pokemon_evoluido"
+    }
+    },
+    "description": "A strange seed was planted on its back at birth...",
     "stats": {
         "HP": 100,
         "Attack": 100,
