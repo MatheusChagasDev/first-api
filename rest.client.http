@@ -197,7 +197,10 @@ Content-Type: application/json
     "evolution": {
     "evolvesFrom": null,
     "evolvesTo": {
-      "_id": "id_do_pokemon_evoluido"
+      "name": "Ivysaur",
+      "method": "Level up",
+      "trigger": null,
+      "level": 16
     }
     },
     "description": "A strange seed was planted on its back at birth...",
