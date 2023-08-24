@@ -278,3 +278,71 @@ Content-Type: application/json
 // get com query
 GET http://localhost:3020/my-pokemons?gender=male
 Content-Type: application/json
+
+################################
+//moves
+################################
+
+POST http://localhost:3020/moves
+Content-Type: application/json
+
+{
+    "number": 1,
+    "name": "Tackle",
+    "type": "Normal",
+    "category": "Physical",
+    "damage": 40,
+    "accuracy": 100,
+    "pp": 35,
+    "effect": 0,
+    "description": "A physical attack in which the user charges and slams into the target with its whole body.",
+    "isHM": false
+}
+
+###
+// buscar todos os moves
+GET http://localhost:3020/moves
+Content-Type: application/json
+
+###
+// buscar pelo id do move
+GET http://localhost:3020/moves/64e7e338b72129b0f0e7a082
+Content-Type: application/json
+
+###
+// editar o move
+PUT http://localhost:3020/moves/64e7e338b72129b0f0e7a082
+Content-Type: application/json
+
+{
+    "number": 1,
+    "name": "Tackle",
+    "type": "Normal",
+    "category": "Physical",
+    "damage": 45,
+    "accuracy": 100,
+    "pp": 35,
+    "effect": 0,
+    "description": "A physical attack in which the user charges and slams into the target with its whole body.",
+    "isHM": false
+}
+
+###
+//deletar o move
+DELETE http://localhost:3020/moves/64e7e338b72129b0f0e7a082
+Content-Type: application/json
+
+###
+PATCH http://localhost:3020/moves/64e7e41b16ea7949f568419b
+Content-Type: application/json
+
+{
+    "type": "fire"
+}
+
+###
+// get com query
+GET http://localhost:3020/moves?type=fire
+Content-Type: application/json
+
+################################

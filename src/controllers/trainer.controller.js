@@ -14,7 +14,7 @@ class TrainerController {
       const missingFields = [];
 
       for (const field of requiredFields) {
-        if (!req.body[field]) {
+        if (req.body[field] === undefined || req.body[field] === null) {
           missingFields.push(field);
           console.log(field);
         }
@@ -108,7 +108,7 @@ class TrainerController {
       const missingFields = [];
 
       for (const field of requiredFields) {
-        if (!req.body[field]) {
+        if (req.body[field] === undefined || req.body[field] === null) {
           missingFields.push(field);
           console.log(field);
         }
