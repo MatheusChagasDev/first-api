@@ -58,3 +58,6 @@ const breedingSchema = new mongoose.Schema({
         descrição: String
     }]
 })
+
+const Breeding = mongoose.model("Breeding", breedingSchema);
+module.exports = Breeding;

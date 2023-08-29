@@ -30,3 +30,6 @@ const evolutionSchema = new mongoose.Schema({
         ref: "Pokemon"
     }
 })
+
+const Evolution = mongoose.model("Evolution", evolutionSchema);
+module.exports = Evolution;
