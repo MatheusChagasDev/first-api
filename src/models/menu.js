@@ -11,7 +11,7 @@ const menuSchema = new mongoose.Schema({
         type: String,
         default: null
     },
-    bag: [itemSchema], // Usando um Array de objetos para representar os itens na bag
+    bag: [itemSchema],
     trainerCard: {
         type: String,
         default: null

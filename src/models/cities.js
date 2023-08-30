@@ -7,9 +7,6 @@ const citySchema = new mongoose.Schema({
     picture: String,
     gym: String,
     gym_leader: String,
-    badge: String,
-    badge_picture: String,
-    badge_description: String,
     song: String,
 })
 
